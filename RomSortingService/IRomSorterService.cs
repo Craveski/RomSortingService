@@ -1,6 +1,7 @@
 namespace RomSortingService;
 
-public interface IRomSorter
+public interface IRomSorterService
 {
-    void Extract(string archivePath, string outputDirectory, CancellationToken ct);
+    Task ProcessFiles(CancellationToken cancellationToken);
+    void DeleteFromDownloads(string zipFile);
 }
