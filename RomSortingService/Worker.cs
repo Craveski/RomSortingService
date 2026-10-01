@@ -22,10 +22,7 @@ public class Worker : BackgroundService
     {
         while (!cancellationToken.IsCancellationRequested)
         {
-            if (_logger.IsEnabled(LogLevel.Information))
-            {
-                _logger.LogInformation("Worker started running at: {time}", DateTimeOffset.Now);
-            }
+            _logger.LogInformation("Worker started running at: {time}", DateTimeOffset.Now);
 
             _extractorService.CleanTempFolder();
 
@@ -45,6 +42,9 @@ public class Worker : BackgroundService
                     _logger.LogError(e, "Error while processing file {file}", zipFile);
                 }
             }
+
+            //I only want the service to run every 10 mins to make it less intensive
+            await Task.Delay(TimeSpan.FromMinutes(10), cancellationToken);
         }
     }
 }
