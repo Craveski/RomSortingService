@@ -51,6 +51,8 @@ public class RomSortingTests : IDisposable
         //Create myself a zip file with an Atari Lyn rom that is older than whatever the cutoff is
         var zipFile = CreateZipFile("too old.zip", "too old.lnx");
         File.SetLastWriteTime(zipFile, DateTime.Now.AddDays(-(_settings.NumberOfDaysToCheck) + 1));
+        
+        Assert.Empty(_extractor.FindNewArchivedFiles());
     }
 
     private string CreateZipFile(string zipFileName, string romName)
